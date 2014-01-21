@@ -9,3 +9,9 @@ cache=$(cd "$2/" && pwd)
 
 echo "---> $build"
 echo "---> $cache"
+
+ls /bin
+ls /usr/bin
+
+/bin/bash --version
+/bin/zsh --version
