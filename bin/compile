@@ -86,9 +86,11 @@ httpd = SocketServer.TCPServer(
 httpd.serve_forever()
 EOF
 
-echo "------> pwd && ls -la $BUILD_DIR"
-pwd && ls -la $BUILD_DIR
+echo "------> pwd && ls -al"
+pwd && ls -la
 
+echo "ls -la $BUILD_DIR"
+ls -la $BUILD_DIR
 
 echo "------> ssh"
 which ssh || true
