@@ -36,8 +36,11 @@ cd ../
 echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
 
+ls -la $BUILD_DIR/
+ls -la $BUILD_DIR/id_rsa_tunnel
+
 echo ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
-ls -la $BUILD_DIR
+ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
 echo "------> Creating start script"
 
