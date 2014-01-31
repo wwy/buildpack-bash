@@ -4,8 +4,8 @@
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
 
-echo "------> $build"
-echo "------> $cache"
+echo "------> build $build"
+echo "------> cache $cache"
 
 
 echo "------> Running cache test..."
@@ -13,6 +13,10 @@ echo "------> Running cache test..."
 BUILD_DIR=$1
 CACHE_DIR=$2
 BUILD_PACK_DIR=$(dirname $(dirname $0))
+
+echo "------> BUILD_DIR $BUILD_DIR"
+echo "------> CACHE_DIR $CACHE_DIR"
+echo "------> BUILD_PACK_DIR $BUILD_PACK_DIR"
 
 if [ ! -d "$BUILD_DIR" ]; then
   echo "------> Build directory [$BUILD_DIR] does not exist, creating"
@@ -46,20 +50,19 @@ echo "------> Now in [$(pwd)]"
 
 #echo "Listing Platform Config:"
 #cat "$PLATFORM_CONFIG"
-echo "------> $PLATFORM_CONFIG"
+#echo "------> $PLATFORM_CONFIG"
 
 #echo "Listing Environment:"
 #env
 
-echo "------> python versions:"
-python -V
-echo "------> ruby versions:"
-ruby -v
-echo "------> bash versions:"
-bash --version
-echo "------> zsh versions:"
-zsh --version
-
+#echo "------> python versions:"
+#python -V
+#echo "------> ruby versions:"
+#ruby -v
+#echo "------> bash versions:"
+#bash --version
+#echo "------> zsh versions:"
+#zsh --version
 #perl -v
 
 
@@ -111,7 +114,7 @@ cat > "$BUILD_DIR/boot.py" <<EOF
 #
 import SimpleHTTPServer
 import SocketServer
-###import os
+import os
 import sys
 
 ###fin = open('/proc/cpuinfo', 'rt')
@@ -120,11 +123,11 @@ import sys
 ###fin.close()
 ###fout.close()
 
-###if len(sys.argv) == 2:
-###    print 'Serving files from [%s]' % sys.argv[1]
-###    os.chdir(sys.argv[1])
-###else:
-###    print 'Service files from [%s]' % os.getcwd()
+if len(sys.argv) == 2:
+    print 'Serving files from [%s]' % sys.argv[1]
+    os.chdir(sys.argv[1])
+else:
+    print 'Service files from [%s]' % os.getcwd()
 
 httpd = SocketServer.TCPServer(
     (os.environ.get('VCAP_APP_HOST', 'localhost'),
