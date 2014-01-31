@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-echo "------> Running cache test..."
+echo "------> Begin..." 
 
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -30,13 +30,12 @@ fi
 echo "------> The compile script is at [$0]"
 echo "------> The build pack is situated at [$BUILD_PACK_DIR]"
 
-echo "------> Moving to the cache dir..."
-cd "$CACHE_DIR"
+echo "------> cd $CACHE_DIR"
 echo "------> Now in [$(pwd)]"
 
-
-cd ../
+echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
+
 echo "------> Creating start script"
 
 cat > "$BUILD_DIR/start.sh" <<EOF
@@ -90,7 +89,7 @@ httpd = SocketServer.TCPServer(
 httpd.serve_forever()
 EOF
 
-
+ls $BUILD_DIR
 
 #echo "Directory listing:"
 #ls -la
