@@ -92,6 +92,8 @@ pwd && ls -la
 echo "ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
 
+echo "------> whoami: `whoami`"
+
 echo "------> ssh"
 which ssh || true
 ssh -V || true
