@@ -86,7 +86,13 @@ httpd = SocketServer.TCPServer(
 httpd.serve_forever()
 EOF
 
-ls $BUILD_DIR
+echo "------> pwd && ls -la $BUILD_DIR"
+pwd && ls -la $BUILD_DIR
+
+echo "------> ssh"
+ssh -V
+echo "------> sshd"
+sshd -V
 
 #echo "Directory listing:"
 #ls -la
