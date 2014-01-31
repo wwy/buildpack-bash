@@ -36,11 +36,18 @@ cd ../
 echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
 
-chmod 600 $BUILD_DIR/id_rsa_tunnel
-ls -la $BUILD_DIR/id_rsa_tunnel
+#mkdir -m 700 -p /home/vcap/.ssh
+mkdir -p /home/vcap/.ssh
+chmod 700 /home/vcap/.ssh
+
+mv $BUILD_DIR/id_rsa_tunnel /home/vcap/.ssh
+chmod 600 /home/vcap/.ssh/id_rsa_tunnel
+
+ls -la /home/vcap/.ssh/
 
 echo ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
+
 
 echo "------> Creating start script"
 
