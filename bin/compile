@@ -4,36 +4,36 @@
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
 
-echo "---> $build"
-echo "---> $cache"
+echo "------> $build"
+echo "------> $cache"
 
 
-echo "---> Running cache test..."
+echo "------> Running cache test..."
 
 BUILD_DIR=$1
 CACHE_DIR=$2
 BUILD_PACK_DIR=$(dirname $(dirname $0))
 
 if [ ! -d "$BUILD_DIR" ]; then
-  echo "---> Build directory [$BUILD_DIR] does not exist, creating"
+  echo "------> Build directory [$BUILD_DIR] does not exist, creating"
   mkdir -p "$BUILD_DIR"
 else
-  echo "---> Build directory [$BUILD_DIR] exists"
+  echo "------> Build directory [$BUILD_DIR] exists"
 fi
 
 if [ ! -d "$CACHE_DIR" ]; then
-  echo "---> Cache directory [$CACHE_DIR] does not exist, creating"
+  echo "------> Cache directory [$CACHE_DIR] does not exist, creating"
   mkdir -p "$CACHE_DIR"
 else
-  echo "---> Cache directory [$CACHE_DIR] exists"
+  echo "------> Cache directory [$CACHE_DIR] exists"
 fi
 
-echo "---> The compile script is at [$0]"
-echo "---> The build pack is situated at [$BUILD_PACK_DIR]"
+echo "------> The compile script is at [$0]"
+echo "------> The build pack is situated at [$BUILD_PACK_DIR]"
 
-echo "---> Moving to the cache dir..."
+echo "------> Moving to the cache dir..."
 cd "$CACHE_DIR"
-echo "---> Now in [$(pwd)]"
+echo "------> Now in [$(pwd)]"
 
 #echo "Directory listing:"
 #ls -la
@@ -46,16 +46,22 @@ echo "---> Now in [$(pwd)]"
 
 #echo "Listing Platform Config:"
 #cat "$PLATFORM_CONFIG"
-echo "---> $PLATFORM_CONFIG"
+echo "------> $PLATFORM_CONFIG"
 
 #echo "Listing Environment:"
 #env
 
-echo "---> Listing script versions:"
+echo "------> python versions:"
 python -V
+echo "------> ruby versions:"
 ruby -v
-perl -v
+echo "------> bash versions:"
 bash --version
+echo "------> zsh versions:"
+zsh --version
+
+#perl -v
+
 
 #echo "Downloading Jonas:"
 #curl -s -O http://orange-buildpacks-binaries.s3-website-us-west-1.amazonaws.com/jonas/jonas-full-5.2.4-bin.tar.gz
@@ -76,28 +82,28 @@ bash --version
 #cat /proc/cpuinfo
 
 cd ../
-echo "---> Now in [$(pwd)]"
-echo "---> Creating start script"
+echo "------> Now in [$(pwd)]"
+echo "------> Creating start script"
 cat > "$BUILD_DIR/start.sh" <<EOF
 #!/bin/bash
 #
 # Start Python Web Server & SSH Reverse Tunnel
 #
 # Copy SSH keys if included with the app
-if [ -d "/home/vcap/app/.ssh" ]; then
-    echo "---> Copied SSH keys"
-    cp -R /home/vcap/app/.ssh /home/vcap/
-    # Start reverse SSH Tunnel
-    echo "---> Starting SSH Reverse Tunnel"
-    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT daniel@\$SSH_HOST
-fi
+###if [ -d "/home/vcap/app/.ssh" ]; then
+###    echo "------> Copied SSH keys"
+###    cp -R /home/vcap/app/.ssh /home/vcap/
+###    # Start reverse SSH Tunnel
+###    echo "------> Starting SSH Reverse Tunnel"
+###    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT daniel@\$SSH_HOST
+###fi
 # Start Python Server
-echo "---> Starting Web Server"
+echo "------> Starting Web Server"
 python /home/vcap/app/boot.py /
 EOF
 chmod 755 "$BUILD_DIR/start.sh"
 
-echo "---> Creating script to start a small Python Web server"
+echo "------> Creating script to start a small Python Web server"
 cat > "$BUILD_DIR/boot.py" <<EOF
 #!/usr/bin/env python
 #
@@ -105,20 +111,20 @@ cat > "$BUILD_DIR/boot.py" <<EOF
 #
 import SimpleHTTPServer
 import SocketServer
-import os
+###import os
 import sys
 
-#fin = open('/proc/cpuinfo', 'rt')
-#fout = open('cpuinfo', 'wt')
-#fout.write(fin.read())
-#fin.close()
-#fout.close()
+###fin = open('/proc/cpuinfo', 'rt')
+###fout = open('cpuinfo', 'wt')
+###fout.write(fin.read())
+###fin.close()
+###fout.close()
 
-if len(sys.argv) == 2:
-    print 'Serving files from [%s]' % sys.argv[1]
-    os.chdir(sys.argv[1])
-else:
-    print 'Service files from [%s]' % os.getcwd()
+###if len(sys.argv) == 2:
+###    print 'Serving files from [%s]' % sys.argv[1]
+###    os.chdir(sys.argv[1])
+###else:
+###    print 'Service files from [%s]' % os.getcwd()
 
 httpd = SocketServer.TCPServer(
     (os.environ.get('VCAP_APP_HOST', 'localhost'),
