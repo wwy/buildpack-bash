@@ -47,14 +47,10 @@ chmod 600 $SSH_DIR/id_rsa_tunnel
 ls -la /home/vcap/
 ls -la $SSH_DIR/
 
-VCAP_APP_PORT=1640
-echo ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io
-ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io
-
 
 echo "------> Creating start script"
 
-cat > "$BUILD_DIR/start.sh" <<EOF
+cat > "$BUILD_DIR/start.sh" <<\EOF
 #!/bin/bash
 
 ###if [ -d "/home/vcap/app/.ssh" ]; then
@@ -65,6 +61,8 @@ cat > "$BUILD_DIR/start.sh" <<EOF
 ###    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT tunnel@aaa.io
 ###fi
 
+echo "------> ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io"
+ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io
 ###echo "------> ssh to tunnel@aaa.io"
 ###ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
