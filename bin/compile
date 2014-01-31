@@ -36,17 +36,18 @@ cd ../
 echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
 
-#mkdir -m 700 -p /home/vcap/.ssh
-mkdir -p /home/vcap/.ssh
-chmod 700 /home/vcap/.ssh
+SSH_DIR=/home/vcap/.ssh
+#mkdir -m 700 -p $SSH_DIR
+mkdir -p $SSH_DIR
+chmod 700 $SSH_DIR
 
-mv $BUILD_DIR/id_rsa_tunnel /home/vcap/.ssh
-chmod 600 /home/vcap/.ssh/id_rsa_tunnel
+mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR
+chmod 600 $SSH_DIR/id_rsa_tunnel
 
-ls -la /home/vcap/.ssh/
+ls -la $SSH_DIR/
 
-echo ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
-ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
+echo ssh -i $SSH_DIR/id_rsa_tunnel tunnel@aaa.io pwd
+ssh -i $SSH_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
 
 echo "------> Creating start script"
