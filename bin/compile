@@ -40,13 +40,13 @@ SSH_DIR=/home/vcap/.ssh
 #mkdir -m 700 -p $SSH_DIR
 mkdir -p $SSH_DIR
 chmod 700 $SSH_DIR
-
-mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR
+cp $BUILD_DIR/id_rsa_tunnel $SSH_DIR
 chmod 600 $SSH_DIR/id_rsa_tunnel
 
 ls -la /home/vcap/
 ls -la $SSH_DIR/
 
+ls -laR /dev
 
 echo "------> Creating start script"
 
