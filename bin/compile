@@ -10,8 +10,38 @@ cache=$(cd "$2/" && pwd)
 echo "---> $build"
 echo "---> $cache"
 
+echo "---> ls"
 ls /bin
 ls /usr/bin
 
+echo "---> version"
 /bin/bash --version
 /bin/zsh --version
+
+
+echo "---> create start.sh"
+cat > "$BUILD_DIR/start.sh" <<EOF
+#!/bin/bash
+echo "------> Starting Web Server"
+python /home/vcap/app/web.py /
+EOF
+chmod 755 "$BUILD_DIR/start.sh"
+
+
+echo "---> create web.py"
+cat > "$BUILD_DIR/web.py" <<EOF
+#!/usr/bin/env python
+#
+import SimpleHTTPServer
+import SocketServer
+import os
+httpd = SocketServer.TCPServer(
+	(os.environ.get('VCAP_APP_HOST', 'localhost'),
+	os.environ.get('VCAP_APP_PORT', 8080)),
+	SimpleHTTPServer.SimpleHTTPRequestHandler
+)
+httpd.serve_forever()
+EOF
+
+
+
