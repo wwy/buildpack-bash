@@ -90,9 +90,10 @@ echo "------> pwd && ls -la $BUILD_DIR"
 pwd && ls -la $BUILD_DIR
 
 echo "------> ssh"
-ssh -V
+ssh -V || true
 echo "------> sshd"
-sshd -V
+sshd -V || true
+which sshd
 
 #echo "Directory listing:"
 #ls -la
