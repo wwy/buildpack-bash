@@ -67,7 +67,7 @@ cat > "$BUILD_DIR/web.py" <<EOF
 #
 import SimpleHTTPServer
 import SocketServer
-###import os
+import os
 import sys
 
 ###fin = open('/proc/cpuinfo', 'rt')
