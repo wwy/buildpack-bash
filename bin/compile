@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+sleep 3
 
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
