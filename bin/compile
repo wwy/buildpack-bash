@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-sleep 3
-
 
 echo "------> Running cache test..."
 
@@ -12,12 +10,6 @@ BUILD_PACK_DIR=$(dirname $(dirname $0))
 echo "------> BUILD_DIR $BUILD_DIR"
 echo "------> CACHE_DIR $CACHE_DIR"
 echo "------> BUILD_PACK_DIR $BUILD_PACK_DIR"
-
-build=$(cd "$1/" && pwd)
-cache=$(cd "$2/" && pwd)
-
-echo "------> build $build"
-echo "------> cache $cache"
 
 
 
