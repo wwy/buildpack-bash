@@ -12,7 +12,6 @@ echo "------> CACHE_DIR $CACHE_DIR"
 echo "------> BUILD_PACK_DIR $BUILD_PACK_DIR"
 
 
-
 if [ ! -d "$BUILD_DIR" ]; then
   echo "------> Build directory [$BUILD_DIR] does not exist, creating"
   mkdir -p "$BUILD_DIR"
@@ -30,20 +29,19 @@ fi
 echo "------> The compile script is at [$0]"
 echo "------> The build pack is situated at [$BUILD_PACK_DIR]"
 
+cd $CACHE_DIR
 echo "------> cd $CACHE_DIR"
 echo "------> Now in [$(pwd)]"
-
+cd ../
 echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
+
 
 echo "------> Creating start script"
 
 cat > "$BUILD_DIR/start.sh" <<EOF
 #!/bin/bash
-#
-# Start Python Web Server & SSH Reverse Tunnel
-#
-# Copy SSH keys if included with the app
+
 ###if [ -d "/home/vcap/app/.ssh" ]; then
 ###    echo "------> Copied SSH keys"
 ###    cp -R /home/vcap/app/.ssh /home/vcap/
@@ -51,10 +49,11 @@ cat > "$BUILD_DIR/start.sh" <<EOF
 ###    echo "------> Starting SSH Reverse Tunnel"
 ###    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT daniel@\$SSH_HOST
 ###fi
-# Start Python Server
+
 echo "------> Starting Web Server"
 python /home/vcap/app/web.py /
 EOF
+
 chmod 755 "$BUILD_DIR/start.sh"
 
 
@@ -62,9 +61,7 @@ echo "------> Creating script to start a small Python Web server"
 
 cat > "$BUILD_DIR/web.py" <<EOF
 #!/usr/bin/env python
-#
-# Simple HTTP Server for accessing files in target director
-#
+
 import SimpleHTTPServer
 import SocketServer
 import os
