@@ -36,7 +36,7 @@ cd ../
 echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
 
-ls -la $BUILD_DIR/
+chmod 600 $BUILD_DIR/id_rsa_tunnel
 ls -la $BUILD_DIR/id_rsa_tunnel
 
 echo ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
@@ -94,8 +94,8 @@ httpd = SocketServer.TCPServer(
 httpd.serve_forever()
 EOF
 
-echo "------> pwd && ls -al"
-pwd && ls -la
+#echo "------> pwd && ls -al"
+#pwd && ls -la
 
 echo "ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
