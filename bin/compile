@@ -89,6 +89,9 @@ EOF
 echo "------> pwd && ls -la $BUILD_DIR"
 pwd && ls -la $BUILD_DIR
 
+
+exit 0
+
 echo "------> ssh"
 ssh -V || true
 echo "------> sshd"
