@@ -36,6 +36,8 @@ cd ../
 echo "------> cd ../"
 echo "------> Now in [$(pwd)]"
 
+echo ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
+ls -la $BUILD_DIR
 
 echo "------> Creating start script"
 
@@ -50,8 +52,8 @@ cat > "$BUILD_DIR/start.sh" <<EOF
 ###    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT tunnel@aaa.io
 ###fi
 
-echo "------> ssh to tunnel@aaa.io"
-ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
+###echo "------> ssh to tunnel@aaa.io"
+###ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
 echo "------> Starting Web Server"
 python /home/vcap/app/web.py /
@@ -95,15 +97,15 @@ pwd && ls -la
 echo "ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
 
-echo "------> whoami: `whoami`"
+#echo "------> whoami: `whoami`"
 
-echo "------> ssh"
-which ssh || true
-ssh -V || true
+#echo "------> ssh"
+#which ssh || true
+#ssh -V || true
 
-echo "------> sshd"
-which sshd || true
-sshd -V || true
+#echo "------> sshd"
+#which sshd || true
+#sshd -V || true
 
 #echo "Directory listing:"
 #ls -la
