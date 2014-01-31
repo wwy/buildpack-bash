@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+#set -eu
 
 mkdir -p "$1" "$2"
 
