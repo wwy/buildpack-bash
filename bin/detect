@@ -1,2 +1,12 @@
-#!/bin/bash
-echo "---> detect"
+#!/usr/bin/env bash
+# bin/detect <build-dir>
+
+set -e
+
+[[ -f 'standalone' ]] && {
+	echo "------> detect standalone"
+	exit 0
+} || {
+	echo "------> detect failed, not standalone."
+	exit 1
+}
