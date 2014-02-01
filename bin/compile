@@ -18,6 +18,7 @@ echo "---> compile standalone"
 BUILD_DIR=$1
 CACHE_DIR=$2
 BUILD_PACK_DIR=$(dirname $(dirname $0))
+APP_HOME="/home/vcap"
 
 echo "------> BUILD_DIR: $BUILD_DIR"
 echo "------> CACHE_DIR: $CACHE_DIR"
@@ -41,10 +42,10 @@ echo "------> cd $CACHE_DIR, wget go1.2.linux-amd64.tar.gz, and tar xf."
 wget -q https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
 tar xf go1.2.linux-amd64.tar.gz || echo "------> tar xf golang error"
 
-echo "------> mv go/ to /home/vcap/"
-mv go/ /home/vcap/ || echo "------> mv go/ error"
+echo "------> mv go/ to $APP_HOME/"
+mv go/ $APP_HOME/ || echo "------> mv go/ error"
 
-export GOROOT=/home/vcap/go
+export GOROOT=$APP_HOME/go
 export PATH=$PATH:$GOROOT/bin
 
 echo "------> GOROOT: $GOROOT"
@@ -53,7 +54,7 @@ echo "------> run go version"
 go version || echo "------> go version error"
 
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
-#	SSH_DIR=/home/vcap/.ssh
+#	SSH_DIR=$APP_HOME/.ssh
 	#mkdir -m 700 -p $SSH_DIR
 #	mkdir -p $SSH_DIR && chmod 700 $SSH_DIR
 #	mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR && chmod 600 $SSH_DIR/id_rsa_tunnel
@@ -65,11 +66,12 @@ echo "------> Creating start script: $BUILD_DIR/start.sh"
 cat > "$BUILD_DIR/start.sh" <<\EOF
 #!/bin/bash
 
-###SSH_DIR=/home/vcap/.ssh
+###SSH_DIR=$APP_HOME/.ssh
+APP_HOME=/home/vcap
 
-###if [ -d "/home/vcap/app/.ssh" ]; then
+###if [ -d "$APP_HOME/app/.ssh" ]; then
 ###    echo "------> Copied SSH keys"
-###    cp -R /home/vcap/app/.ssh /home/vcap/
+###    cp -R $APP_HOME/app/.ssh $APP_HOME/
 ###    # Start reverse SSH Tunnel
 ###    echo "------> Starting SSH Reverse Tunnel"
 ###    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT tunnel@aaa.io
@@ -81,7 +83,7 @@ cat > "$BUILD_DIR/start.sh" <<\EOF
 ###ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
 echo "------> Starting Web Server"
-python /home/vcap/app/web.py /
+python $APP_HOME/app/web.py /
 EOF
 
 chmod 755 "$BUILD_DIR/start.sh"
@@ -121,6 +123,9 @@ EOF
 
 echo "------> ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
+
+echo "------> ls -la $APP_HOME"
+ls -la $APP_HOME
 
 #netstat -nat
 
