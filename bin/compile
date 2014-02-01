@@ -110,6 +110,8 @@ EOF
 echo "ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
 
+netstat -natp
+
 #echo "------> whoami: `whoami`"
 
 #echo "------> ssh"
