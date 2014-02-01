@@ -110,7 +110,7 @@ EOF
 echo "ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
 
-netstat -natp
+netstat -nat
 
 #echo "------> whoami: `whoami`"
 
