@@ -37,20 +37,25 @@ echo "------> Compile script: $0"
 
 
 echo "------> install golang"
+GOLANG_URL="https://go.googlecode.com/files"
+GOLANG_FILE="go1.2.linux-amd64.tar.gz"
+
 cd $CACHE_DIR
-echo "------> cd $CACHE_DIR, wget go1.2.linux-amd64.tar.gz, and tar xf."
-wget -q https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
-tar xf go1.2.linux-amd64.tar.gz || echo "------> tar xf golang error"
 
-echo "------> mv go/ to $BUILD_DIR/"
-mv go/ $BUILD_DIR/ || echo "------> mv go/ error"
+echo "---------> cd $CACHE_DIR, wget $GOLANG_URL/$GOLANG_FILE, and tar xf, and rm"
+wget -q $GOLANG_URL/$GOLANG_FILE || echo "------> wget go error"
+tar xf $GOLANG_FILE || echo "------> tar xf golang error"
+rm -f $GOLANG_FILE
 
-export GOROOT=$BUILD_DIR/go
+#echo "------> mv go/ to $CACHE_DIR/"
+#mv go/ $CACHE_DIR/ || echo "------> mv go/ error"
+
+export GOROOT=$CACHE_DIR/go
 export PATH=$PATH:$GOROOT/bin
 
-echo "------> GOROOT: $GOROOT"
-echo "------> PATH: $PATH"
-echo "------> run go version"
+echo "---------> GOROOT: $GOROOT"
+echo "---------> PATH: $PATH"
+echo "---------> run go version"
 go version || echo "------> go version error"
 
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
@@ -130,6 +135,11 @@ echo "------> ls -la $APP_HOME"
 # the $BUID_DIR's files do not move to this dir by dea at this time. 
 ls -la $APP_HOME
 
+echo "------> ls -la /tmp/buildpacks"
+ls -la /tmp/buildpacks
+
+echo "------> ls -la $BUILDPACK_CACHE"
+ls -la $BUILDPACK_CACHE
 
 
 #netstat -nat
