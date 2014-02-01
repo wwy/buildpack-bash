@@ -40,13 +40,13 @@ SSH_DIR=/home/vcap/.ssh
 #mkdir -m 700 -p $SSH_DIR
 mkdir -p $SSH_DIR
 chmod 700 $SSH_DIR
-cp $BUILD_DIR/id_rsa_tunnel $SSH_DIR
+mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR
 chmod 600 $SSH_DIR/id_rsa_tunnel
 
-ls -la /home/vcap/
-ls -la $SSH_DIR/
+#ls -la /home/vcap/
+#ls -la $SSH_DIR/
 
-ls -laR /dev
+#ls -laR /dev
 
 echo "------> Creating start script"
 
@@ -63,8 +63,8 @@ SSH_DIR=/home/vcap/.ssh
 ###    ssh -f -N -T -R 2222:localhost:\$VCAP_APP_PORT tunnel@aaa.io
 ###fi
 
-echo "------> ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io"
-ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io
+###echo "------> ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io"
+###ssh -v -i $SSH_DIR/id_rsa_tunnel -f -N -T -R 2222:localhost:$VCAP_APP_PORT tunnel@aaa.io
 ###echo "------> ssh to tunnel@aaa.io"
 ###ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
