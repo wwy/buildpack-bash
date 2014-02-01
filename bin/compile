@@ -42,10 +42,10 @@ echo "------> cd $CACHE_DIR, wget go1.2.linux-amd64.tar.gz, and tar xf."
 wget -q https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
 tar xf go1.2.linux-amd64.tar.gz || echo "------> tar xf golang error"
 
-echo "------> mv go/ to $APP_HOME/"
-mv go/ $APP_HOME/ || echo "------> mv go/ error"
+echo "------> mv go/ to $BUILD_DIR/"
+mv go/ $BUILD_DIR/ || echo "------> mv go/ error"
 
-export GOROOT=$APP_HOME/go
+export GOROOT=$BUILD_DIR/go
 export PATH=$PATH:$GOROOT/bin
 
 echo "------> GOROOT: $GOROOT"
@@ -66,8 +66,10 @@ echo "------> Creating start script: $BUILD_DIR/start.sh"
 cat > "$BUILD_DIR/start.sh" <<\EOF
 #!/bin/bash
 
-###SSH_DIR=$APP_HOME/.ssh
-APP_HOME=/home/vcap
+export APP_HOME=/home/vcap
+##S#SH_DIR=$APP_HOME/.ssh
+export GOROOT=$APP_HOME/go
+export PATH=$PATH:$GOROOT/bin
 
 ###if [ -d "$APP_HOME/app/.ssh" ]; then
 ###    echo "------> Copied SSH keys"
