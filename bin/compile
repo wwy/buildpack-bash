@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
 
+echo "---> detect in compile"
+
+[[ -f "$1/standalone" ]] && {
+	echo "------> standalone file found"
+} || {
+	echo "------> detect failed, not standalone."
+	exit 1
+}
+
+
 echo "---> compile standalone" 
 
 BUILD_DIR=$1
