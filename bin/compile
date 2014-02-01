@@ -35,30 +35,23 @@ echo "------> Compile script: $0"
 }
 
 
-#cd $CACHE_DIR
-#echo "------> cd $CACHE_DIR"
-#echo "------> pwd: $(pwd)"
-#cd ../
-#echo "------> cd ../"
-#echo "------> pwd: $(pwd)"
-
 echo "------> install golang"
 cd $CACHE_DIR
-wget https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
+echo "------> cd $CACHE_DIR"
+wget -q https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
 tar xf go1.2.linux-amd64.tar.gz || echo "------> tar xf golang error"
 mv go /home/vcap/ || echo "------> mv go/ error"
-/home/vcap/go/bin/go version || echo "------> go version error"
 
-[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
-	SSH_DIR=/home/vcap/.ssh
+export GOROOT=/home/vcap/go
+export PATH=$PATH:$GOROOT/bin
+go version || echo "------> go version error"
+
+#[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
+#	SSH_DIR=/home/vcap/.ssh
 	#mkdir -m 700 -p $SSH_DIR
-	mkdir -p $SSH_DIR && chmod 700 $SSH_DIR
-	mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR && chmod 600 $SSH_DIR/id_rsa_tunnel
-}
-
-[[ -f "$BUILD_DIR/zsh" ]] && {
-	$BUILD_DIR/zsh --version || echo "------> zsh error"
-}
+#	mkdir -p $SSH_DIR && chmod 700 $SSH_DIR
+#	mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR && chmod 600 $SSH_DIR/id_rsa_tunnel
+#}
 
 
 echo "------> Creating start script: $BUILD_DIR/start.sh"
@@ -66,7 +59,7 @@ echo "------> Creating start script: $BUILD_DIR/start.sh"
 cat > "$BUILD_DIR/start.sh" <<\EOF
 #!/bin/bash
 
-SSH_DIR=/home/vcap/.ssh
+###SSH_DIR=/home/vcap/.ssh
 
 ###if [ -d "/home/vcap/app/.ssh" ]; then
 ###    echo "------> Copied SSH keys"
