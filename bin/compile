@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 
 echo "---> detect in compile"
 
@@ -33,20 +35,29 @@ echo "------> Compile script: $0"
 }
 
 
+#cd $CACHE_DIR
+#echo "------> cd $CACHE_DIR"
+#echo "------> pwd: $(pwd)"
+#cd ../
+#echo "------> cd ../"
+#echo "------> pwd: $(pwd)"
+
+echo "------> install golang"
 cd $CACHE_DIR
-echo "------> cd $CACHE_DIR"
-echo "------> pwd: $(pwd)"
-cd ../
-echo "------> cd ../"
-echo "------> pwd: $(pwd)"
+wget https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz
+tar xf go1.2.linux-amd64.tar.gz
+mv go /home/vcap/
+/home/vcap/go/bin/go version
 
 [[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
 	SSH_DIR=/home/vcap/.ssh
 	#mkdir -m 700 -p $SSH_DIR
-	mkdir -p $SSH_DIR
-	chmod 700 $SSH_DIR
-	mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR
-	chmod 600 $SSH_DIR/id_rsa_tunnel
+	mkdir -p $SSH_DIR && chmod 700 $SSH_DIR
+	mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR && chmod 600 $SSH_DIR/id_rsa_tunnel
+}
+
+[[ -f "$BUILD_DIR/zsh" ]] && {
+	$BUILD_DIR/zsh --version
 }
 
 
