@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-echo "------> Begin..." 
+echo "---> compile standalone" 
 
 BUILD_DIR=$1
 CACHE_DIR=$2
