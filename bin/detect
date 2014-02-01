@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-set -e
+#set -e
+
+echo "---> detect standalone"
 
 [[ -f "$1/standalone" ]] && {
-	echo "---> detect standalone"
+	echo "------> standalone file found"
 	exit 0
 } || {
-	echo "---> detect failed, not standalone."
+	echo "------> detect failed, not standalone."
 	exit 1
 }
