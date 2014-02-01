@@ -37,13 +37,19 @@ echo "------> Compile script: $0"
 
 echo "------> install golang"
 cd $CACHE_DIR
-echo "------> cd $CACHE_DIR"
+echo "------> cd $CACHE_DIR, wget go1.2.linux-amd64.tar.gz, and tar xf."
 wget -q https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
 tar xf go1.2.linux-amd64.tar.gz || echo "------> tar xf golang error"
-mv go /home/vcap/ || echo "------> mv go/ error"
+
+echo "------> mv go/ to /home/vcap/"
+mv go/ /home/vcap/ || echo "------> mv go/ error"
 
 export GOROOT=/home/vcap/go
 export PATH=$PATH:$GOROOT/bin
+
+echo "------> GOROOT: $GOROOT"
+echo "------> PATH: $PATH"
+echo "------> run go version"
 go version || echo "------> go version error"
 
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
@@ -81,7 +87,7 @@ EOF
 chmod 755 "$BUILD_DIR/start.sh"
 
 
-echo "------> Creating script to start a small Python Web server: $BUILD_DIR/web.py"
+echo "------> Creating script to start a Python Web server: $BUILD_DIR/web.py"
 
 cat > "$BUILD_DIR/web.py" <<EOF
 #!/usr/bin/env python
