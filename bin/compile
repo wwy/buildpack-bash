@@ -44,10 +44,10 @@ echo "------> Compile script: $0"
 
 echo "------> install golang"
 cd $CACHE_DIR
-wget https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz
-tar xf go1.2.linux-amd64.tar.gz
-mv go /home/vcap/
-/home/vcap/go/bin/go version
+wget https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz || echo "------> wget go error"
+tar xf go1.2.linux-amd64.tar.gz || echo "------> tar xf golang error"
+mv go /home/vcap/ || echo "------> mv go/ error"
+/home/vcap/go/bin/go version || echo "------> go version error"
 
 [[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
 	SSH_DIR=/home/vcap/.ssh
@@ -57,7 +57,7 @@ mv go /home/vcap/
 }
 
 [[ -f "$BUILD_DIR/zsh" ]] && {
-	$BUILD_DIR/zsh --version
+	$BUILD_DIR/zsh --version || echo "------> zsh error"
 }
 
 
