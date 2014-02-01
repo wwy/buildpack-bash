@@ -125,7 +125,10 @@ echo "------> ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
 
 echo "------> ls -la $APP_HOME"
+# the $BUID_DIR's files do not move to this dir by dea at this time. 
 ls -la $APP_HOME
+
+
 
 #netstat -nat
 
