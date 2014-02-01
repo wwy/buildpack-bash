@@ -6,7 +6,7 @@ echo "---> detect in compile"
 [[ -f "$1/standalone" ]] && {
 	echo "------> standalone file found"
 } || {
-	echo "------> detect failed, not standalone."
+	echo "------> detect failed, standalone file not found."
 	exit 1
 }
 
