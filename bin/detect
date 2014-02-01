@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+exit 1
+
+
 if [ -f $1/standalone ]; then
   echo "CACHETEST" && exit 0
 else
