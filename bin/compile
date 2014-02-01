@@ -17,48 +17,40 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 BUILD_PACK_DIR=$(dirname $(dirname $0))
 
-echo "------> BUILD_DIR $BUILD_DIR"
-echo "------> CACHE_DIR $CACHE_DIR"
-echo "------> BUILD_PACK_DIR $BUILD_PACK_DIR"
+echo "------> BUILD_DIR: $BUILD_DIR"
+echo "------> CACHE_DIR: $CACHE_DIR"
+echo "------> BUILD_PACK_DIR: $BUILD_PACK_DIR"
+echo "------> Compile script: $0"
 
+[[ ! -d "$BUILD_DIR" ]] && {
+	echo "------> mkdir -p $BUILD_DIR"
+	mkdir -p "$BUILD_DIR"
+}
 
-if [ ! -d "$BUILD_DIR" ]; then
-  echo "------> Build directory [$BUILD_DIR] does not exist, creating"
-  mkdir -p "$BUILD_DIR"
-else
-  echo "------> Build directory [$BUILD_DIR] exists"
-fi
+[[ ! -d "$CACHE_DIR" ]] && {
+	echo "------> mkdir -p $CACHE_DIR"
+	mkdir -p "$CACHE_DIR"
+}
 
-if [ ! -d "$CACHE_DIR" ]; then
-  echo "------> Cache directory [$CACHE_DIR] does not exist, creating"
-  mkdir -p "$CACHE_DIR"
-else
-  echo "------> Cache directory [$CACHE_DIR] exists"
-fi
-
-echo "------> The compile script is at [$0]"
-echo "------> The build pack is situated at [$BUILD_PACK_DIR]"
 
 cd $CACHE_DIR
 echo "------> cd $CACHE_DIR"
-echo "------> Now in [$(pwd)]"
+echo "------> pwd: $(pwd)"
 cd ../
 echo "------> cd ../"
-echo "------> Now in [$(pwd)]"
+echo "------> pwd: $(pwd)"
 
-SSH_DIR=/home/vcap/.ssh
-#mkdir -m 700 -p $SSH_DIR
-mkdir -p $SSH_DIR
-chmod 700 $SSH_DIR
-mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR
-chmod 600 $SSH_DIR/id_rsa_tunnel
+[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
+	SSH_DIR=/home/vcap/.ssh
+	#mkdir -m 700 -p $SSH_DIR
+	mkdir -p $SSH_DIR
+	chmod 700 $SSH_DIR
+	mv $BUILD_DIR/id_rsa_tunnel $SSH_DIR
+	chmod 600 $SSH_DIR/id_rsa_tunnel
+}
 
-#ls -la /home/vcap/
-#ls -la $SSH_DIR/
 
-#ls -laR /dev
-
-echo "------> Creating start script"
+echo "------> Creating start script: $BUILD_DIR/start.sh"
 
 cat > "$BUILD_DIR/start.sh" <<\EOF
 #!/bin/bash
@@ -85,7 +77,7 @@ EOF
 chmod 755 "$BUILD_DIR/start.sh"
 
 
-echo "------> Creating script to start a small Python Web server"
+echo "------> Creating script to start a small Python Web server: $BUILD_DIR/web.py"
 
 cat > "$BUILD_DIR/web.py" <<EOF
 #!/usr/bin/env python
@@ -117,7 +109,7 @@ EOF
 #echo "------> pwd && ls -al"
 #pwd && ls -la
 
-echo "ls -la $BUILD_DIR"
+echo "------> ls -la $BUILD_DIR"
 ls -la $BUILD_DIR
 
 #netstat -nat
