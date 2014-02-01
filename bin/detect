@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
-# bin/detect <build-dir>
 
-#set -e
+if [ -f $1/standalone ]; then
+  echo "CACHETEST" && exit 0
+else
+  echo "no" && exit 1
+fi
+
+
+
+exit 0
 
 echo "---> detect standalone"
 
