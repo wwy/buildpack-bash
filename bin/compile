@@ -58,6 +58,10 @@ echo "---------> PATH: $PATH"
 echo "---------> run go version"
 go version || echo "------> go version error"
 
+echo "---------> go build *.go"
+go build $BUILD_DIR/*.go
+
+
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
 #	SSH_DIR=$APP_HOME/.ssh
 	#mkdir -m 700 -p $SSH_DIR
@@ -90,7 +94,9 @@ export PATH=$PATH:$GOROOT/bin
 ###ssh -i $BUILD_DIR/id_rsa_tunnel tunnel@aaa.io pwd
 
 echo "------> Starting Web Server"
-python $APP_HOME/app/web.py /
+###python $APP_HOME/app/web.py /
+$APP_HOME/app/hello
+
 EOF
 
 chmod 755 "$BUILD_DIR/start.sh"
