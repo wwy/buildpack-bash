@@ -62,7 +62,7 @@ echo "---------> go build *.go"
 go build $BUILD_DIR/*.go
 
 #TODO
-mv $BUILD_DIR/* $APP_HOME
+mv $BUILD_DIR/* $APP_HOME/app
 
 
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
