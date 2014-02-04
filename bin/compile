@@ -61,6 +61,9 @@ go version || echo "------> go version error"
 echo "---------> go build *.go"
 go build $BUILD_DIR/*.go
 
+#TODO
+mv $BUILD_DIR/* $APP_HOME
+
 
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
 #	SSH_DIR=$APP_HOME/.ssh
