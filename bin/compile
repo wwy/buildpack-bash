@@ -59,7 +59,7 @@ echo "---------> run go version"
 go version || echo "------> go version error"
 
 echo "---------> go build *.go"
-go build $BUILD_DIR/*.go
+go build $BUILD_DIR/*.go || echo "------> go build error"
 
 #TODO
 mv $BUILD_DIR/* $APP_HOME/app
