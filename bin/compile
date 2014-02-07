@@ -51,6 +51,8 @@ rm -f $GOLANG_FILE
 #mv go/ $CACHE_DIR/ || echo "------> mv go/ error"
 
 export GOROOT=$CACHE_DIR/go
+export GOPATH=$BUILD_DIR/.go
+export MAIN=$GOPATH/src/main
 export PATH=$PATH:$GOROOT/bin
 
 echo "---------> GOROOT: $GOROOT"
@@ -58,11 +60,15 @@ echo "---------> PATH: $PATH"
 echo "---------> run go version"
 go version || echo "------> go version error"
 
-echo "---------> go build *.go"
-go build $BUILD_DIR/*.go || echo "------> go build error"
+echo "---------> go build main"
+mkdir -p $MAIN
+cd $MAIN
+cp -R $BUILD_DIR/* $MAIN
+go get ./... || echo "------> go get error"
+#go build $BUILD_DIR/*.go || echo "------> go build error"
 
-#TODO
-mv $BUILD_DIR/* $APP_HOME/app
+#
+mv $GOPATH/bin/* $BUILD_DIR/
 
 
 #[[ -f "$BUILD_DIR/id_rsa_tunnel" ]] && {
@@ -98,7 +104,7 @@ export PATH=$PATH:$GOROOT/bin
 
 echo "------> Starting Web Server"
 ###python $APP_HOME/app/web.py /
-$APP_HOME/app/hello
+$APP_HOME/app/main
 
 EOF
 
